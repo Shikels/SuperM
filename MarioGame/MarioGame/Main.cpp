@@ -1,7 +1,10 @@
 #include<allegro5/allegro.h>
 #include<allegro5/allegro_native_dialog.h>
 #include<allegro5/allegro_primitives.h>
+#include<allegro5/allegro_image.h>
 #include "mappy_A5.h"
+
+#include "Game.h"
 
 const int width = 800;
 const int length = 500;
@@ -23,6 +26,9 @@ int main()
 	ALLEGRO_EVENT_QUEUE*event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
 
+	// game class objects
+
+	Game lo;
 	//initialisation of allegro
 	if (!al_init())
 		return -1;
@@ -32,6 +38,7 @@ int main()
 	// addons init
 	al_init_primitives_addon();
 	al_install_keyboard();
+	al_init_image_addon();
 	
 	if (MapLoad("MarioMap.fmp", 1))
 		return -4;
@@ -50,6 +57,8 @@ int main()
 	{ 
 	
 		MapDrawBG(0,76,0,-1, width, length);
+
+		lo.drawCoins();
 		al_flip_display();
 	
 	}
