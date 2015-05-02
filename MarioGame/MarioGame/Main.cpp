@@ -11,6 +11,7 @@ bool keys[5] = { false, false, false, false, false };
 int main()
 {
 
+
 	//primitives variables
 	bool gameover = false;
 	bool redraw = true;
