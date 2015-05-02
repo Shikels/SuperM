@@ -52,3 +52,10 @@ void Game::drawCoins()
 
 
 }
+
+void Game::moveMario()
+{
+
+
+
+}

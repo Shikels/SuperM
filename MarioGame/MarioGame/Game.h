@@ -6,6 +6,8 @@ public:
 	~Game();
 	void drawMario();
 	void drawCoins();
+	void moveMario();
+
 
 };
 
