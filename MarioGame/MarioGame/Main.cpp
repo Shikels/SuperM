@@ -58,6 +58,7 @@ int main()
 	
 		MapDrawBG(0,76,0,-1, width, length);
 
+		lo.drawMario();
 		lo.drawCoins();
 		al_flip_display();
 	
