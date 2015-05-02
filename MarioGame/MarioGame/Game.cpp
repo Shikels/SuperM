@@ -28,4 +28,15 @@ void Game::drawMario(int x,int y)
 	
 }
 
+void Game::drawEnemys(int x,int y)
+{
+
+
+
+	ALLEGRO_BITMAP*enamy = al_load_bitmap("SuperM.png");
+
+	al_draw_bitmap(enamy, x, y, NULL);
+
+
+}
 

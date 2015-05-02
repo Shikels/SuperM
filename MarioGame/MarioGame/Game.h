@@ -11,7 +11,8 @@ public:
 	Game();
 	~Game();
 	void drawMario(int,int);
-	
+	void moveMario(int,int);
+	void drawEnemys(int=0,int=0);
 
 
 };

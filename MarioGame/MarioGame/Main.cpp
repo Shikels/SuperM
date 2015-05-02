@@ -74,6 +74,7 @@ int main()
 		al_play_sample_instance(songinstance);
 	al_start_timer(timer);
 	// game loop
+	//keycode scan and moving based on keyboard input
 	while (!gameover)
 	{
 		ALLEGRO_EVENT event;
@@ -121,17 +122,20 @@ int main()
 			else if (event.type == ALLEGRO_EVENT_TIMER)
 			{
 				x -= keys[LEFT]*10;
-				x += keys[RIGHT]*10;
+				x += keys[RIGHT] * 10;
 				x1 -= keys[LEFT] * 10;
 				x1 += keys[RIGHT] * 10;
-				
+				y1 -= keys[UP] * 30;
 
 				
 				if (x1>600)
 					x1 = 600-10;
+				// mario offset
 				if (x1 < 0)
 					x1 = 0;
-
+				if (y1 < 0)
+					y1 = 0;
+				//map boundx and boundy
 				if (x < 0)
 					x = 0;
 				if (y < 0)
@@ -141,6 +145,8 @@ int main()
 
 				if (y>(mapheight*mapblockheight) - width)
 				y = (mapheight*mapblockheight) - length;
+
+
 
 				redraw = true;
 			}
@@ -162,7 +168,7 @@ int main()
 	}
 
 
-
+	// destroy all decared pointer variables
 	MapFreeMem();
 	al_destroy_display(display);
 	al_destroy_timer(timer);
