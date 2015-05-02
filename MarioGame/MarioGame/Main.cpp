@@ -4,7 +4,7 @@
 #include "mappy_A5.h"
 
 const int width = 800;
-const int length = 480;
+const int length = 500;
 enum KEYS{ UP, DOWN, RIGHT, LEFT, SPACE };
 bool keys[5] = { false, false, false, false, false };
 
@@ -48,7 +48,7 @@ int main()
 	while (1)
 	{ 
 	
-		MapDrawBG(0, 0, 0 ,0, width, length);
+		MapDrawBG(0,76,0,-1, width, length);
 		al_flip_display();
 	
 	}
