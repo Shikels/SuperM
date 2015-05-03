@@ -682,7 +682,6 @@ ALLEGRO_BITMAP * MapMakeParallaxBitmap (ALLEGRO_BITMAP * sourcebm)
 	al_set_target_bitmap(newbm);
 	al_draw_bitmap_region(temp,0,0,mapblockwidth,h+mapblockheight,w,0,0);
 	al_destroy_bitmap(temp);
-
 	PopTargetDisplayAndBitmap();
 	return newbm;
 }

@@ -3,6 +3,7 @@
 #include<allegro5/allegro_primitives.h>
 #include<allegro5/allegro_image.h>
 #include "allegro5/allegro_font.h"
+#include "allegro5/allegro_ttf.h"
 #include<allegro5\allegro_audio.h>
 #include<allegro5\allegro_acodec.h>
 #include "mappy_A5.h"
@@ -24,7 +25,7 @@ int main()
 	const int FPS = 60;
 	
 	int x = 0, y = 0, y1 = 383,x1=20;
-
+	int score=0;
 	// allegro variables  initailatision
 
 	ALLEGRO_DISPLAY*display = NULL;
@@ -47,6 +48,8 @@ int main()
 	al_init_image_addon();
 	al_install_audio();
 	al_init_acodec_addon();
+	al_init_font_addon();
+	al_init_ttf_addon();
 	
 	
 	if (MapLoad("MarioMap.fmp", 1))
@@ -57,8 +60,12 @@ int main()
 	//play sound
 	ALLEGRO_SAMPLE*one_up = al_load_sample("1-up.wav");
 	ALLEGRO_SAMPLE*song = al_load_sample("orig.mp3");
+	ALLEGRO_FONT*font;
 
 	al_reserve_samples(2);
+	font = al_load_font("timesnewarial.ttf",18,0);
+	
+	
 
 	ALLEGRO_SAMPLE_INSTANCE*songinstance = al_create_sample_instance(song);
 	al_set_sample_instance_playmode(songinstance, ALLEGRO_PLAYMODE_LOOP);
@@ -158,9 +165,18 @@ int main()
 
 			MapDrawBG(x, y, 0, 0, width, length);
 	
-			lo.drawMario(x1,y1);
 			
-			
+			lo.DrawCoins_enemys_box(x, y,x1,y1);
+			lo.drawMario(x1, y1);
+			al_draw_textf(font, al_map_rgb(45, 255, 150), 5, 5, 0, "Mario Has $%i", score);
+			//
+
+
+		
+			 
+		
+
+			//
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}

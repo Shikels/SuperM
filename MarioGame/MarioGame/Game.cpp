@@ -8,10 +8,8 @@
 
 Game::Game()
 {
-	in_x = 0;
-	in_y = 0;
-}
 
+}
 
 Game::~Game()
 {
@@ -39,4 +37,135 @@ void Game::drawEnemys(int x,int y)
 
 
 }
+
+void Game:: mapCollisionDetect(int, int)
+{
+
+
+
+}
+
+void Game::DrawCoins_enemys_box(int x, int y,int x1,int y1)
+{
+	int xoff = x;
+	
+	ALLEGRO_BITMAP*coins = al_load_bitmap("coin1.png");
+	ALLEGRO_BITMAP*box = al_load_bitmap("box.png");
+	ALLEGRO_BITMAP*blume = al_load_bitmap("blume.png");
+	
+	// first coin group
+	
+	    
+		al_draw_bitmap(coins, mapblockgapx * 8 - xoff, mapblockheight * 12 - y, NULL);
+		xoff += 50;
+		
+		al_draw_bitmap(coins, mapblockgapx * 8 - xoff, mapblockheight * 12 - y, NULL);
+		xoff += 50;
+		al_draw_bitmap(coins, mapblockgapx * 8 - xoff, mapblockheight * 12 - y, NULL);
+		xoff += 50;
+		al_draw_bitmap(coins, mapblockgapx * 8 - xoff, mapblockheight * 12 - y, NULL);
+	
+	// second coin group
+
+	xoff =x ;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 12 - y, NULL);
+
+	// third coin group
+
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 35 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 35 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 35 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 35 - xoff, mapblockheight * 12 - y, NULL);
+
+
+	// fourth group
+
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 6 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 6- y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 6 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 15 - xoff, mapblockheight * 6 - y, NULL);
+
+	// next group
+
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 30 - xoff, mapblockheight * 6 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 30 - xoff, mapblockheight * 6 - y, NULL);
+
+	// next group
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 40 - xoff, mapblockheight * 3 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 40 - xoff, mapblockheight * 3 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 40 - xoff, mapblockheight * 3 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 40 - xoff, mapblockheight * 3 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 40 - xoff, mapblockheight * 3 - y, NULL);
+
+	//next coins 
+
+
+	xoff =x;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 7 - y, NULL);
+	
+
+	// last conis
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	xoff = x;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+	xoff += 50;
+	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+// draw box and blume
+
+	al_draw_bitmap(blume, mapblockgapx * 59 - xoff, mapblockheight * 9 - y, NULL);
+	al_draw_bitmap(box, mapblockgapx * 22 - xoff, mapblockheight * 4 - y, NULL);
+
+
+
+
+
+
+	//destroy allegro variables
+	al_destroy_bitmap(coins);
+	al_destroy_bitmap(box);
+	al_destroy_bitmap(blume);
+
+}
+
 
