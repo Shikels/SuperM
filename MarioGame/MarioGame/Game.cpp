@@ -19,7 +19,7 @@ void Game::drawMario(int x,int y)
 
 	
 	
-	ALLEGRO_BITMAP*mario=al_load_bitmap("SuperM.png");
+	ALLEGRO_BITMAP*mario=al_load_bitmap("player1r.png");
 
 	al_draw_bitmap(mario, x,y, NULL);
 	
@@ -31,19 +31,13 @@ void Game::drawEnemys(int x,int y)
 
 
 
-	ALLEGRO_BITMAP*enamy = al_load_bitmap("SuperM.png");
+	ALLEGRO_BITMAP*enamy = al_load_bitmap("turtler1.png");
 
-	al_draw_bitmap(enamy, x, y, NULL);
-
-
+	
+			al_draw_bitmap(enamy, mapblockgapx * 65 - x, mapblockheight * 12 - y, NULL);
+	
 }
 
-void Game:: mapCollisionDetect(int, int)
-{
-
-
-
-}
 
 void Game::DrawCoins_enemys_box(int x, int y,int x1,int y1)
 {
@@ -151,6 +145,8 @@ void Game::DrawCoins_enemys_box(int x, int y,int x1,int y1)
 	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
 	xoff += 50;
 	al_draw_bitmap(coins, mapblockgapx * 70 - xoff, mapblockheight * 12 - y, NULL);
+
+
 // draw box and blume
 
 	al_draw_bitmap(blume, mapblockgapx * 59 - xoff, mapblockheight * 9 - y, NULL);
@@ -168,4 +164,19 @@ void Game::DrawCoins_enemys_box(int x, int y,int x1,int y1)
 
 }
 
+void Game::mapCollisionDetect(int x,int y,int x1, int y1,int *score)
+{
 
+	ALLEGRO_BITMAP*clear = al_load_bitmap("coin1.png");
+	int i=x;
+
+		int in_x = mapblockgapx * 8 - i, in_y = mapblockheight * 12 - y;
+
+		if (x1 = in_x)
+		{
+			al_draw_bitmap(clear, in_x, in_y, NULL);
+		
+			score += 1;
+		}
+		score += 1;
+}

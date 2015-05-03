@@ -168,15 +168,13 @@ int main()
 			
 			lo.DrawCoins_enemys_box(x, y,x1,y1);
 			lo.drawMario(x1, y1);
+			lo.mapCollisionDetect(x,y,x1, y1,&score);
+			lo.drawEnemys(x, y);
+
+			// display score
 			al_draw_textf(font, al_map_rgb(45, 255, 150), 5, 5, 0, "Mario Has $%i", score);
-			//
 
 
-		
-			 
-		
-
-			//
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
