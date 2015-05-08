@@ -34,7 +34,7 @@ void Game::drawEnemys(int x,int y)
 	ALLEGRO_BITMAP*enamy = al_load_bitmap("turtler1.png");
 
 	
-			al_draw_bitmap(enamy, mapblockgapx * 65 - x, mapblockheight * 12 - y, NULL);
+			al_draw_bitmap(enamy, mapblockgapx * 65 - x, mapblockheight * 12 +20-y, NULL);
 
 
 	
