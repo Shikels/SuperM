@@ -31,7 +31,7 @@ int main()
 	ALLEGRO_DISPLAY*display = NULL;
 	ALLEGRO_EVENT_QUEUE*queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-
+	
 	// game class objects
 
 	Game lo;
@@ -50,6 +50,7 @@ int main()
 	al_init_acodec_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
+
 	
 	
 	if (MapLoad("MarioMap.fmp", 1))
@@ -61,10 +62,12 @@ int main()
 	ALLEGRO_SAMPLE*one_up = al_load_sample("1-up.wav");
 	ALLEGRO_SAMPLE*song = al_load_sample("orig.mp3");
 	ALLEGRO_FONT*font;
+	ALLEGRO_FONT *font1;
+
 
 	al_reserve_samples(2);
 	font = al_load_font("timesnewarial.ttf",18,0);
-	
+	font1 = al_load_font("congratulations.ttf",36,NULL);
 	
 
 	ALLEGRO_SAMPLE_INSTANCE*songinstance = al_create_sample_instance(song);
@@ -128,15 +131,13 @@ int main()
 
 			else if (event.type == ALLEGRO_EVENT_TIMER)
 			{
-				x -= keys[LEFT]*10;
-				x += keys[RIGHT] * 10;
-				x1 -= keys[LEFT] * 10;
-				x1 += keys[RIGHT] * 10;
-				y1 -= keys[UP] * 30;
+				x -= keys[LEFT]*15;
+				x += keys[RIGHT] * 15;
+				x1 -= keys[LEFT] * 4;
+				x1 += keys[RIGHT] * 4;
+				y1 -= keys[UP] * 10;
 
-				
-				if (x1>600)
-					x1 = 600-10;
+			
 				// mario offset
 				if (x1 < 0)
 					x1 = 0;
@@ -153,7 +154,7 @@ int main()
 				if (y>(mapheight*mapblockheight) - width)
 				y = (mapheight*mapblockheight) - length;
 
-
+				
 
 				redraw = true;
 			}
@@ -163,14 +164,29 @@ int main()
 
 			redraw = false;
 
-			MapDrawBG(x, y, 0, 0, width, length);
-	
 			
-			lo.DrawCoins_enemys_box(x, y,x1,y1);
-			lo.drawMario(x1, y1);
-			lo.mapCollisionDetect(x,y,x1, y1,&score);
-			lo.drawEnemys(x, y);
+		
+	
+			if (x1 > 740)
+			{
+				ALLEGRO_BITMAP *win = al_load_bitmap("blue-sky.png");
+				x1 = 750;
+				al_draw_bitmap(win, 0, 0, NULL);
+				al_draw_textf(font1, al_map_rgb(255, 0, 0),250, length / 2-100, 20, "CONGRATULATIONS");
+				al_draw_textf(font1, al_map_rgb(255, 0, 0), 140, length / 2-50, 20, " YOU HAVE COMPLETED THE GAME", score);
+				al_draw_textf(font1, al_map_rgb(255, 0, 0), 250, length / 2, 20, " YOUR SCORE IS %i", score);
 
+
+
+			}
+			
+			else
+			{
+				MapDrawBG(x, y, 0, 0, width, length);
+				lo.drawMario(x1, y1);
+				lo.mapCollisionDetect(x, y, x1, y1, &score);
+				lo.drawEnemys(x, y);
+			}
 			// display score
 			al_draw_textf(font, al_map_rgb(45, 255, 150), 5, 5, 0, "Mario Has $%i", score);
 
