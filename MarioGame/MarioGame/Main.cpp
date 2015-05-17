@@ -49,7 +49,7 @@ int main()
 	//initialisation of allegro
 	if (!al_init())
 		return -1;
-	display = al_create_display(width, length); //create display object
+	display = al_create_display(width, length); //creates display object
 	if (!display)                               //test display object
 		return -1;
 
