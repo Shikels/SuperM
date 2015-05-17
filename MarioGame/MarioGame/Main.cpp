@@ -184,14 +184,36 @@ int main()
 						if (y < 20)
 							y += 10; 
 					}
-				if (keys[LEFT])
-				{
+					if (keys[LEFT])
+					{
 
-					x-= keys[LEFT] * 2;
-					if (x < 0)
-						x = 0;
+						x -= keys[LEFT] * 2;
+						if (x < 0)
+							x = 0;
 
-				}
+					}
+
+					
+					//Mario movement above and under the Block
+					else if (x >= 175 && x <= 440)
+					{
+						
+						//above the block
+					if (y < 205)
+					{
+						y = 175;
+						y -= keys[UP] * 60;
+					}
+
+					//under the block
+					if (y > 205)
+					{
+						y = length - 125;
+						y -= keys[UP] * 120;
+					}
+					}
+						
+
 			
 				if (keys[RIGHT])
 				{
@@ -203,6 +225,7 @@ int main()
 
 				}
 			
+				lo.marioCollideEnemy(x, x +50,mario,gameover);
 				//map boundx and boundy
 				
 				mapx -= keys[LEFT] * 2;
@@ -245,7 +268,7 @@ int main()
 			
 				x = 770;
 				//al_draw_bitmap(gavor, 0, 0, NULL);
-				al_clear_to_color(al_map_rgb(0, 0, 255));
+				al_clear_to_color(al_map_rgb(10, 150, 155));
 				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2, 100, " YOU HAVE COMPLETED LEVEL 1");
 				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2+50,100, "SCORE IS   %i", score);
 
@@ -260,11 +283,14 @@ int main()
 				// collision with the enemy
 				if (x == x1 && y == y1)
 				{
-					gameover = false;
+					gameover = true;
 				}
+
 				else
 					al_draw_bitmap_region(mario, sourceX, 0, 45, 42, x, y, NULL);
-				lo.drawMario(x, y);
+				al_convert_mask_to_alpha(mario, al_map_rgb(0, 0, 0));
+				
+				al_draw_textf(font, al_map_rgb(0, 255, 150), 5, 5, 0, "Mario Has $%i and %i", x,y);
 
 
 				lo.mapCollisionDetect(mapx, mapy, x, y, score,draw);
