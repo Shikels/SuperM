@@ -49,8 +49,8 @@ int main()
 	//initialisation of allegro
 	if (!al_init())
 		return -1;
-	display = al_create_display(width, length);
-	if (!display)
+	display = al_create_display(width, length); //create display object
+	if (!display)                               //test display object
 		return -1;
 
 	// addons initialisation
@@ -111,7 +111,7 @@ int main()
 
 
 
-		if (event.type == ALLEGRO_EVENT_KEY_DOWN)
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) // when key is pushed down
 		{
 			switch (event.keyboard.keycode)
 			{
@@ -131,7 +131,7 @@ int main()
 			}
 		}
 		else
-			if (event.type == ALLEGRO_EVENT_KEY_UP)
+			if (event.type == ALLEGRO_EVENT_KEY_UP) // when key is released
 			{
 				switch (event.keyboard.keycode)
 				{
@@ -312,13 +312,13 @@ int main()
 			}
 
 			al_flip_display();
-			al_clear_to_color(al_map_rgb(0, 0, 0));
+			al_clear_to_color(al_map_rgb(0, 0, 0)); //clears back buffer to the colour black
 		}
 
 	}
 
 
-	// destroy all decared pointer variables
+	// destroy all declared pointer variables
 	MapFreeMem();
 	al_destroy_display(display);
 	al_destroy_timer(timer);
