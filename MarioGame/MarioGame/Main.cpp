@@ -19,18 +19,29 @@ int main()
 {
 
 
+	
 	//primitives variables
 	bool gameover = false;
 	bool redraw = false;
 	const int FPS = 60;
-	
-	int x = 0, y = 0, y1 = 383,x1=20;
+	BLKSTR* currentblock;
+	bool draw = true;
+	int mapx = 0, mapy = 0, y= 0,x=20;
 	int score=0;
+	int velx=0, vely=0;
+	const  float gravity = 5;
+	bool jump = false;
+	float jumpspeed = 10;
+	bool active = false;
+	int sourceX = 0;
+	int x1=650, y1=380;
 	// allegro variables  initailatision
 
 	ALLEGRO_DISPLAY*display = NULL;
 	ALLEGRO_EVENT_QUEUE*queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
+	
+	
 
 	// game class objects
 
@@ -54,15 +65,22 @@ int main()
 	
 	if (MapLoad("MarioMap.fmp", 1))
 		return -4;
-
+	
+	
 	al_set_window_title(display, "SUPER MARIO 2D GAME");
 
 	//play sound
-	ALLEGRO_SAMPLE*one_up = al_load_sample("1-up.wav");
-	ALLEGRO_SAMPLE*song = al_load_sample("orig.mp3");
+	al_reserve_samples(3);
+	ALLEGRO_SAMPLE*one_up = al_load_sample("die.wav");
+	ALLEGRO_SAMPLE*song = al_load_sample("orig.wav");
+	ALLEGRO_SAMPLE*jumpSound = al_load_sample("jump.wav");
+	// font and bitmaps
 	ALLEGRO_FONT*font;
+	ALLEGRO_BITMAP*mario = al_load_bitmap("mario.png");
+	
 
-	al_reserve_samples(2);
+
+	
 	font = al_load_font("timesnewarial.ttf",18,0);
 	
 	
@@ -86,6 +104,12 @@ int main()
 	{
 		ALLEGRO_EVENT event;
 		al_wait_for_event(queue, &event);
+
+		//al_play_sample(song);
+
+		al_play_sample(one_up, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+
+
 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
@@ -128,31 +152,81 @@ int main()
 
 			else if (event.type == ALLEGRO_EVENT_TIMER)
 			{
-				x -= keys[LEFT]*10;
-				x += keys[RIGHT] * 10;
-				x1 -= keys[LEFT] * 10;
-				x1 += keys[RIGHT] * 10;
-				y1 -= keys[UP] * 30;
 
-				
-				if (x1>600)
-					x1 = 600-10;
-				// mario offset
-				if (x1 < 0)
-					x1 = 0;
-				if (y1 < 0)
-					y1 = 0;
+			
+				if (keys[UP] && jump)
+				{
+				jump = false;
+			
+				} 
+					
+				if (!jump)
+					y += gravity;
+				else
+					vely = 0;
+				x += velx;
+				y += vely;
+
+
+				jump = (y >= 375);
+
+				if (jump)
+					y = 375;
+					
+
+					if (keys[UP])
+					{
+
+						//al_play_sample(jumpSound, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+						y -= 10;
+						if (keys[RIGHT])
+							x += 2;
+						if (y < 20)
+							y += 10; 
+					}
+				if (keys[LEFT])
+				{
+
+					x-= keys[LEFT] * 2;
+					if (x < 0)
+						x = 0;
+
+				}
+			
+				if (keys[RIGHT])
+				{
+					x += keys[RIGHT] * 2;
+					sourceX += al_get_bitmap_width(mario) / 3;
+					if (sourceX >= al_get_bitmap_width(mario))
+						sourceX = 0;
+					
+
+				}
+			
 				//map boundx and boundy
-				if (x < 0)
-					x = 0;
-				if (y < 0)
-					y = 0;
-				if (x>(mapwidth*mapblockwidth) - width)
-					x = (mapwidth*mapblockwidth) - width;
+				
+				mapx -= keys[LEFT] * 2;
+				mapx += keys[RIGHT] * 2;
 
-				if (y>(mapheight*mapblockheight) - width)
-				y = (mapheight*mapblockheight) - length;
+				if (mapx < 0)
+					mapx = 0;
+				if (mapy < 0)
+					mapy = 0;
+				if (mapx>(mapwidth*mapblockwidth) - width)
+					mapx = (mapwidth*mapblockwidth) - width;
 
+				if (mapy>(mapheight*mapblockheight) - width)
+				mapy = (mapheight*mapblockheight) - length;
+
+				if (active)
+
+				{
+					sourceX += al_get_bitmap_width(mario) / 3;
+				}
+				else
+					sourceX = 36;
+				if (sourceX >= al_get_bitmap_width(mario))
+					sourceX = 0;
 
 
 				redraw = true;
@@ -163,17 +237,53 @@ int main()
 
 			redraw = false;
 
-			MapDrawBG(x, y, 0, 0, width, length);
-	
 			
-			lo.DrawCoins_enemys_box(x, y,x1,y1);
-			lo.drawMario(x1, y1);
-			lo.mapCollisionDetect(x,y,x1, y1,&score);
-			lo.drawEnemys(x, y);
+		
+	
+			if (x > 760)
+			{
+			
+				x = 770;
+				//al_draw_bitmap(gavor, 0, 0, NULL);
+				al_clear_to_color(al_map_rgb(0, 0, 255));
+				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2, 100, " YOU HAVE COMPLETED LEVEL 1");
+				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2+50,100, "SCORE IS   %i", score);
 
-			// display score
-			al_draw_textf(font, al_map_rgb(45, 255, 150), 5, 5, 0, "Mario Has $%i", score);
+				
+			}
+			
+			else
+			{
+				x1 -= 3;
+				MapDrawBG(mapx, mapy, 0, 0, width, length);
 
+				// collision with the enemy
+				if (x == x1 && y == y1)
+				{
+					gameover = false;
+				}
+				else
+					al_draw_bitmap_region(mario, sourceX, 0, 45, 42, x, y, NULL);
+				lo.drawMario(x, y);
+
+
+				lo.mapCollisionDetect(mapx, mapy, x, y, score,draw);
+
+				// draw enemy
+				if (x > 200 && x<600)
+				{
+					
+					if (x1 < 0)
+					{
+						x1 = 650;
+					}
+					else
+					lo.drawEnemys(x1, y1);
+				
+				}
+
+				al_draw_textf(font, al_map_rgb(0, 255, 150), 5, 5, 0, "Mario Has $%i", score);
+			}
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -188,6 +298,7 @@ int main()
 	al_destroy_timer(timer);
 	al_destroy_sample(one_up);
 	al_destroy_sample(song);
+	al_destroy_bitmap(mario);
 	al_destroy_sample_instance(songinstance);
 	al_destroy_event_queue(queue);
 	return 0;

@@ -13,8 +13,8 @@ public:
 	void drawMario(int,int);
 	void moveMario(int,int);
 	void drawEnemys(int=0,int=0);
-	void mapCollisionDetect(int,int,int,int,int*);
-	void DrawCoins_enemys_box(int x, int y,int,int);
+	void mapCollisionDetect(int &, int &, int&, int&, int&, bool&);
+	int collided(int x, int y);
 	
 
 };
