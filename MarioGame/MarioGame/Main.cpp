@@ -23,18 +23,30 @@ int main()
 	//primitives variables
 	bool gameover = false;
 	bool redraw = false;
-	const int FPS = 60;
-	BLKSTR* currentblock;
 	bool draw = true;
-	int mapx = 0, mapy = 0, y= 0,x=20;
-	int score=0;
-	int velx=0, vely=0;
-	const  float gravity = 5;
 	bool jump = false;
-	float jumpspeed = 10;
 	bool active = false;
+	bool Done = false;
+
+	int xEnemy = 650;
+	int mapx = 0, mapy = 0, y = 0, x = 20;
+	int score = 0;
+	int velx = 0, vely = 0;
 	int sourceX = 0;
-	int x1=650, y1=380;
+	int x1 = 650, y1 = 380;
+
+	const int FPS = 60;
+	const  float gravity = 5;
+
+	BLKSTR* currentblock;
+	
+
+	
+	
+	
+	float jumpspeed = 10;
+	
+	
 	// allegro variables  initailatision
 
 	ALLEGRO_DISPLAY*display = NULL;
@@ -100,7 +112,7 @@ int main()
 	al_start_timer(timer);
 	// game loop
 	//keycode scan and moving based on keyboard input
-	while (!gameover)
+	while (!Done)
 	{
 		ALLEGRO_EVENT event;
 		al_wait_for_event(queue, &event);
@@ -125,7 +137,7 @@ int main()
 				keys[UP] = true;
 				break;
 			case ALLEGRO_KEY_ESCAPE:
-				gameover = true;
+				Done = true;
 				break;
 
 			}
@@ -145,7 +157,7 @@ int main()
 					keys[UP] = false;
 					break;
 				case ALLEGRO_KEY_ESCAPE:
-					gameover = true;
+					Done = true;
 					break;
 				}
 			}
@@ -225,7 +237,7 @@ int main()
 
 				}
 			
-				lo.marioCollideEnemy(x, x +50,mario,gameover);
+				
 				//map boundx and boundy
 				
 				mapx -= keys[LEFT] * 2;
@@ -255,60 +267,80 @@ int main()
 				redraw = true;
 			}
 
+
+			
+
 		if (redraw && al_is_event_queue_empty(queue))
 		{
-
-			redraw = false;
-
 			
-		
-	
-			if (x > 760)
+			if (!gameover)
 			{
-			
-				x = 770;
-				//al_draw_bitmap(gavor, 0, 0, NULL);
-				al_clear_to_color(al_map_rgb(10, 150, 155));
-				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2, 100, " YOU HAVE COMPLETED LEVEL 1");
-				al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2+50,100, "SCORE IS   %i", score);
+				redraw = false;
 
-				
-			}
-			
-			else
-			{
-				x1 -= 3;
-				MapDrawBG(mapx, mapy, 0, 0, width, length);
 
-				// collision with the enemy
-				if (x == x1 && y == y1)
+				if (x > 760)
 				{
-					gameover = true;
+
+					x = 770;
+					//al_draw_bitmap(gavor, 0, 0, NULL);
+					al_clear_to_color(al_map_rgb(10, 150, 155));
+					al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2, 100, " YOU HAVE COMPLETED LEVEL 1");
+					al_draw_textf(font, al_map_rgb(0, 0, 0), 50, length / 2 + 50, 100, "SCORE IS   %i", score);
+
+
 				}
+
+
+
+
 
 				else
-					al_draw_bitmap_region(mario, sourceX, 0, 45, 42, x, y, NULL);
-				al_convert_mask_to_alpha(mario, al_map_rgb(0, 0, 0));
-				
-				al_draw_textf(font, al_map_rgb(0, 255, 150), 5, 5, 0, "Mario Has $%i and %i", x,y);
-
-
-				lo.mapCollisionDetect(mapx, mapy, x, y, score,draw);
-
-				// draw enemy
-				if (x > 200 && x<600)
 				{
-					
-					if (x1 < 0)
-					{
-						x1 = 650;
-					}
-					else
-					lo.drawEnemys(x1, y1);
-				
-				}
+					xEnemy -= 1;
+					MapDrawBG(mapx, mapy, 0, 0, width, length);
 
-				al_draw_textf(font, al_map_rgb(0, 255, 150), 5, 5, 0, "Mario Has $%i", score);
+
+
+					lo.mapCollisionDetect(mapx, mapy, x, y, score, draw);
+
+					//draw enemy
+					if (x > 200 && x < 600)
+					{
+
+						if (xEnemy < 0)
+						{
+							xEnemy = 650;
+						}
+
+						else
+							lo.drawEnemys(xEnemy, y1);
+
+					}
+
+
+					
+
+					// collision with the enemy
+				
+					if (  x == xEnemy)
+					{
+						
+						gameover = true;
+					}
+
+					else
+						al_draw_bitmap_region(mario, sourceX, 0, 45, 42, x, y, NULL);
+					al_convert_mask_to_alpha(mario, al_map_rgb(0, 0, 0));
+
+
+					al_draw_textf(font, al_map_rgb(0, 255, 150), 5, 5, 0, "Mario Has $%i",score);
+				}
+			}
+
+			else if (gameover)
+			{
+				al_draw_textf(font, al_map_rgb(255, 0, 255), width / 2, length / 2, ALLEGRO_ALIGN_CENTRE, "Gameover : Final Score : %i", score);
+
 			}
 
 			al_flip_display();

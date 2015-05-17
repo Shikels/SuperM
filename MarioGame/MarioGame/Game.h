@@ -12,7 +12,7 @@ public:
 	~Game();
 	void drawMario(int,int);
 	void moveMario(int,int);
-	void drawEnemys(int=0,int=0);
+	void drawEnemys(int =0,int=0);
 	void mapCollisionDetect(int &, int &, int&, int&, int&, bool&);
 	void marioCollideEnemy(int, int,bool,bool);
 	int collided(int x, int y);

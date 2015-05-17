@@ -24,20 +24,20 @@ void Game::drawEnemys(int x1,int y)
 
 	ALLEGRO_BITMAP*enamy = al_load_bitmap("shell1.png");
 	ALLEGRO_BITMAP*enamy1 = al_load_bitmap("goomba2.png");
-		al_draw_bitmap(enamy, x1+50, y, NULL);
-		al_convert_mask_to_alpha(enamy, al_map_rgb(0, 0, 0));
+		al_draw_bitmap(enamy, x1 + 70, y, NULL);
+		//al_convert_mask_to_alpha(enamy, al_map_rgb(0, 0, 0));
 		
-		// al_draw_bitmap(enamy1, x + 250, y, NULL);
+//		 al_draw_bitmap(enamy1, x + 250, y, NULL);
 		
 	
-
+ 
 	
 }
 
 void Game::marioCollideEnemy(int x, int x1,bool mario,bool gameover)
 {
 	
-		if (x == x1)
+		if (x = x1  )
 		{
 			mario = false;
 			gameover = true;
